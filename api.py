@@ -14,10 +14,14 @@ app = flask.Flask(__name__)
 
 assist: zjuintl_assistant.Assistant = None
 
+# middleware for logging request info
+@app.after_request
+def log_request_info(response):
+    app.logger.info(f"{flask.request.method} {flask.request.url} {response.status}")
+    return response
+
 @app.route('/rss/announcements', methods=['GET'])
 def get_announcements():
-    data = assist.get_bb_announcements(20)
-    # return "\n".join([item.html_content for item in data])
     fg = FeedGenerator()
     fg.id("bb_announcements")
     fg.title("Announcements")
