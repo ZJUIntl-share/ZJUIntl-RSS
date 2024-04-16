@@ -4,3 +4,4 @@ rsa
 pyYAML
 feedgen
 flask
+waitress

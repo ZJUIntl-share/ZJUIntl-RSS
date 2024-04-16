@@ -4,6 +4,7 @@ import logging
 import datetime
 
 import flask
+import waitress
 import yaml
 from feedgen.feed import FeedGenerator
 
@@ -76,4 +77,5 @@ if __name__ == '__main__':
 
     assist = zjuintl_assistant.Assistant(config["username"], config["password"])
 
-    app.run(host="0.0.0.0", port=5000)
+    waitress.serve(app, host='0.0.0.0', port=5000)
+    
