@@ -1,0 +1,6 @@
+requests
+rsa
+
+pyYAML
+feedgen
+flask
