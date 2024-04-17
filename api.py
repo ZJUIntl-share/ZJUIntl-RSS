@@ -3,6 +3,7 @@ import sys
 import logging
 import datetime
 
+import requests
 import flask
 import waitress
 import yaml
@@ -27,7 +28,7 @@ def get_announcements():
     fg.id("bb_announcements")
     fg.title("Announcements")
     fg.author({"name": "ZJUIntl Assistant"})
-    fg.link(href="https://learn.zju.edu.cn", rel="alternate")
+    fg.link(href="https://learn.intl.edu.cn", rel="alternate")
     fg.description("Announcements")
 
     for item in assist.get_bb_announcements(20):
@@ -35,7 +36,8 @@ def get_announcements():
         fe.id(f"{item.title}-{item.course}")
         fe.title("{} - {}".format(item.title, item.course.split(":")[0]))
         fe.updated(item.date.replace(tzinfo=datetime.timezone(datetime.timedelta(hours=8))))
-        fe.content(item.html_content)
+        html_content = item.html_content.replace("https://learn.intl.zju.edu.cn", f"{flask.request.url_root}proxybb/https://learn.intl.zju.edu.cn")
+        fe.content(html_content)
 
     return fg.atom_str(), 200, {"Content-Type": "application/xml"}
 
@@ -45,7 +47,7 @@ def get_grades():
     fg.id("bb_grades")
     fg.title("Grades")
     fg.author({"name": "ZJUIntl Assistant"})
-    fg.link(href="https://learn.zju.edu.cn", rel="alternate")
+    fg.link(href="https://learn.intl.zju.edu.cn", rel="alternate")
     fg.description("Grades")
 
     for item in assist.get_bb_grades(20):
@@ -56,6 +58,18 @@ def get_grades():
         fe.content(f"{item.grade} / {item.pointsPossible}")
 
     return fg.atom_str(), 200, {"Content-Type": "application/xml"}
+
+@app.route('/proxybb/<path:path>', methods=['GET'])
+def proxy_bb(path):
+    if "learn.intl.zju.edu.cn" not in path:
+        return "Invalid path", 400
+    
+    session = requests.Session()
+    session.cookies = assist.get_cookie_jar("login_blackboard")
+
+    response = session.get(path)
+
+    return response.content, response.status_code, response.headers.items()
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
