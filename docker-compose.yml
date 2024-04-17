@@ -1,5 +1,3 @@
-version: "3"
-
 services:
   bb-rss:
     image: "bb-rss"
