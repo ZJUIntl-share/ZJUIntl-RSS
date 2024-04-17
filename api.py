@@ -32,7 +32,7 @@ def get_announcements():
 
     for item in assist.get_bb_announcements(20):
         fe = fg.add_entry()
-        fe.id(f"{item.title}-{item.course}-{item.date}")
+        fe.id(f"{item.title}-{item.course}")
         fe.title("{} - {}".format(item.title, item.course.split(":")[0]))
         fe.updated(item.date.replace(tzinfo=datetime.timezone(datetime.timedelta(hours=8))))
         fe.content(item.html_content)
@@ -50,7 +50,7 @@ def get_grades():
 
     for item in assist.get_bb_grades(20):
         fe = fg.add_entry()
-        fe.id(f"{item.title}-{item.course}-{item.date}")
+        fe.id(f"{item.title}-{item.course}")
         fe.title("{} - {}".format(item.title, item.course.split(":")[0]))
         fe.updated(item.date.replace(tzinfo=datetime.timezone(datetime.timedelta(hours=8))))
         fe.content(f"{item.grade} / {item.pointsPossible}")
