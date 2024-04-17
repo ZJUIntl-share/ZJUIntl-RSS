@@ -17,7 +17,8 @@ assist: zjuintl_assistant.Assistant = None
 # middleware for logging request info
 @app.after_request
 def log_request_info(response):
-    app.logger.info(f"{flask.request.method} {flask.request.url} {response.status}")
+    timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    print(f"{timestamp} {flask.request.method} {flask.request.url} {response.status}")
     return response
 
 @app.route('/rss/announcements', methods=['GET'])
