@@ -18,7 +18,7 @@ assist: zjuintl_assistant.Assistant = None
 @app.after_request
 def log_request_info(response):
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    print(f"{timestamp} {flask.request.method} {flask.request.url} {response.status}")
+    app.logger.info(f"{timestamp} {flask.request.method} {flask.request.url} {response.status}")
     return response
 
 @app.route('/rss/announcements', methods=['GET'])
