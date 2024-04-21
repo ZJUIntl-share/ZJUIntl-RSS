@@ -31,12 +31,20 @@ def get_announcements():
     fg.link(href="https://learn.intl.edu.cn", rel="alternate")
     fg.description("Announcements")
 
-    for item in assist.get_bb_announcements(20):
+    for item in assist.get_bb_announcements(50, full=True):
         fe = fg.add_entry()
-        fe.id(f"{item.title}-{item.course}")
-        fe.title("{} - {}".format(item.title, item.course.split(":")[0]))
+
+        html_content = item.html_content
+        if html_content is not None:
+            html_content =  html_content.replace("https://learn.intl.zju.edu.cn", f"{flask.request.url_root}proxybb/https://learn.intl.zju.edu.cn")
+        if (html_content is None):
+            html_content = ""
+            fe.id("{} {}-{}".format(item.title, item.get_event_message(), item.course))
+            fe.title("{} {} - {}".format(item.title, item.get_event_message(), item.course.split(":")[0]))
+        else:
+            fe.id("{}-{}".format(item.title, item.course))
+            fe.title("{} - {}".format(item.title, item.course.split(":")[0]))
         fe.updated(item.date.replace(tzinfo=datetime.timezone(datetime.timedelta(hours=8))))
-        html_content = item.html_content.replace("https://learn.intl.zju.edu.cn", f"{flask.request.url_root}proxybb/https://learn.intl.zju.edu.cn")
         fe.content(html_content)
 
     return fg.atom_str(), 200, {"Content-Type": "application/xml"}
@@ -74,7 +82,7 @@ def proxy_bb(path):
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
     if os.environ.get("DEBUG"):
-        logging.getLogger("zjuintl_assistant").setLevel(logging.DEBUG)
+        logging.getLogger("zjuintl_assistant.zjuintl_assistant.assistant").setLevel(logging.DEBUG)
 
     if not os.path.exists("config.yaml"):
         with open("config.yaml", "w") as f:
