@@ -1,7 +1,7 @@
-requests
-rsa
+requests==2.31.0
+rsa==4.9
 
-pyYAML
-feedgen
-flask
-waitress
+PyYAML==6.0.1
+feedgen==1.0.0
+Flask==3.0.3
+waitress==3.0.0

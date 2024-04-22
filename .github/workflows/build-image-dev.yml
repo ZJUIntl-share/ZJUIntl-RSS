@@ -1,0 +1,27 @@
+name: Build and push dev Docker image
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+    paths:
+      - '.github/workflows/build-image.yml'
+      - '.github/workflows/build-image-dev.yml'
+      - 'Dockerfile'
+      - 'zjuintl_assistant/**'
+      - 'api.py'
+      - 'requirements.txt'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build-and-push:
+    if: github.repository == 'ZJUIntl-share/blackboard-RSS'
+    uses: ./.github/workflows/build-image.yml
+    secrets: inherit
+    with:
+      tags: dev

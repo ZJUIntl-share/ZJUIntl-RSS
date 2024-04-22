@@ -1,11 +1,31 @@
-FROM python:3.11.9-slim-bookworm
-
-COPY zjuintl_assistant /app/zjuintl_assistant
-COPY api.py /app/api.py
-COPY requirements.txt /app/requirements.txt
+FROM --platform=$BUILDPLATFORM python:3.11.8-alpine3.19 AS builder
+LABEL name="blackboard-rss"
 
 WORKDIR /app
 
-RUN pip install -r requirements.txt
+COPY . .
 
-CMD ["python3", "api.py"]
+# Install dependencies
+RUN apk add --update-cache ca-certificates tzdata patchelf clang ccache
+
+# Insall python and dependencies
+RUN pip3 install -r requirements.txt && \
+    pip3 install nuitka
+
+# Use nuikta to compile the python code
+RUN --mount=type=cache,target=/root/.cache/Nuitka \
+    python3 -m nuitka --clang --onefile --standalone api.py && \
+    chmod +x api.bin
+
+
+FROM alpine
+
+WORKDIR /app
+
+COPY --from=builder /app/api.bin /app/api.bin
+COPY --from=builder /usr/share/zoneinfo /usr/share/zoneinfo
+COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
+
+EXPOSE 5000
+
+ENTRYPOINT ["/app/api.bin"]
