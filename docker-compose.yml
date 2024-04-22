@@ -1,12 +1,9 @@
 services:
   bb-rss:
-    image: "bb-rss"
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: geniucker/blackboard-rss:latest
     environment:
       - TZ=Asia/Shanghai
     ports:
       - "5000:5000"
     volumes:
-      - config.yaml:/app/config.yaml
+      - ./config.yaml:/app/config.yaml
