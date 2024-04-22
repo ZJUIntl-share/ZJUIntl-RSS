@@ -2,6 +2,11 @@
 
 This is a web server that scrapes Blackboard for grades and announcements and provides an RSS feed for them.
 
+## API
+
+- `GET /rss/grades`: Get the grades in Atom format.
+- `GET /rss/announcements`: Get the announcements in Atom format.
+
 ## Usage
 
 ### Docker
