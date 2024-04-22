@@ -1,22 +1,22 @@
 # Blackboard RSS
 
-This is a web server that scrapes Blackboard for grades and announcements and provides an RSS feed for them.
+这是一个将 Blackboard 的成绩和 Announcement 转换为 RSS (Atom) 订阅的服务端程序。搭配 Feeder 等软件可以实现 Blackboard 成绩和 Announcement 的推送。
 
 ## API
 
-- `GET /rss/grades`: Get the grades in Atom format.
-- `GET /rss/announcements`: Get the announcements in Atom format.
+- `GET /rss/grades`: 获取成绩
+- `GET /rss/announcements`: 获取公告
 
-## Usage
+## 部署
 
 ### Docker
 
-1. Create a folder lets say `blackboard-rss` and create a `config.yaml` file in it. The file should look like this:  
+1. 创建一个文件夹，比如 `blackboard-rss`，并在其中创建一个 `config.yaml` 文件。文件内容如下：
     ```yaml
     username: "your_username"
     password: "your_password"
     ```
-2. Create a `docker-compose.yml` file in the same folder:  
+2. 在同一文件夹中创建一个 `docker-compose.yml` 文件：
     ```yaml
     services:
       bb-rss:
@@ -28,18 +28,23 @@ This is a web server that scrapes Blackboard for grades and announcements and pr
         volumes:
           - ./config.yaml:/app/config.yaml
     ```
-3. Run `docker-compose up -d` in the folder.
+3. 在文件夹中运行 `docker-compose up -d`。
 
-### Binary
+### 二进制部署
 
-1. Download the latest release from the [releases page](https://github.com/ZJUIntl-share/blackboard-rss/releases).
-2. Unzip the archive and create a `config.yaml` file in the same folder. The file should look like this:  
+1. 下载最新的 [release](https://github.com/ZJUIntl-share/blackboard-rss/releases)。
+2. 解压缩文件并在同一文件夹中创建一个 `config.yaml` 文件。文件内容如下：
   ```yaml
   username: "your_username"
   password: "your_password"
   ```
-3. Run the binary.
+3. 运行二进制文件。
 
-## Credits
+## 说明
+
+- 若使用 Docker 部署，请务必先创建 `config.yaml` 文件，然后再运行 Docker 容器。
+- 由于获取 Announcement 需要多次请求，因此 `GET /rss/announcements` 接口可能会比较慢。
+
+## 感谢
 
 - [zjuintl_assistant](https://github.com/ZJUIntl-share/zjuintl_assistant)
