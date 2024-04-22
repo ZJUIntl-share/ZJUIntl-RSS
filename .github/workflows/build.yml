@@ -57,7 +57,6 @@ jobs:
         run: |
           mkdir output
           cp build/api${{ matrix.os == 'windows-latest' && '.exe' || '.bin' }} output/api${{ matrix.os == 'windows-latest' && '.exe' || '' }}
-          cp -r static output/static
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
