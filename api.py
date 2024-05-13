@@ -67,6 +67,23 @@ def get_grades():
 
     return fg.atom_str(), 200, {"Content-Type": "application/xml"}
 
+@app.route('/rss/myzjunotices', methods=['GET'])
+def get_myZJU_notices():
+    fg = FeedGenerator()
+    fg.id("myzju_notices")
+    fg.title("myZJU Notices")
+    fg.author({"name": "ZJUIntl Assistant"})
+    fg.link(href="https://www.intl.zju.edu.cn/my-zju/zh-hans/students", rel="alternate")
+
+    for item in assist.get_myZJU_notices(20, False, True):
+        fe = fg.add_entry()
+        fe.id(item.title)
+        fe.title(item.title)
+        fe.updated(item.date.replace(tzinfo=datetime.timezone(datetime.timedelta(hours=8))))
+        fe.content(item.content)
+
+    return fg.atom_str(), 200, {"Content-Type": "application/xml"}
+
 @app.route('/proxybb/<path:path>', methods=['GET'])
 def proxy_bb(path):
     if "learn.intl.zju.edu.cn" not in path:
