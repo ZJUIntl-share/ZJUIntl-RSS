@@ -14,7 +14,7 @@ permissions:
   packages: write
 
 env:
-  IMAGE_REPOSITORY: geniucker/blackboard-rss
+  IMAGE_REPOSITORY: geniucker/zjuintl-rss
 
 jobs:
   setup:

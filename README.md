@@ -1,4 +1,4 @@
-# Blackboard RSS
+# ZJUIntl RSS
 
 这是一个将 Blackboard 的成绩和 Announcement 转换为 RSS (Atom) 订阅的服务端程序。搭配 Feeder 等软件可以实现 Blackboard 成绩和 Announcement 的推送。
 
@@ -6,12 +6,13 @@
 
 - `GET /rss/grades`: 获取成绩
 - `GET /rss/announcements`: 获取公告
+- 'GET /rss/myzjunotices': 获取 myZJU 通知
 
 ## 部署
 
 ### Docker
 
-1. 创建一个文件夹，比如 `blackboard-rss`，并在其中创建一个 `config.yaml` 文件。文件内容如下：
+1. 创建一个文件夹，比如 `zjuintl-rss`，并在其中创建一个 `config.yaml` 文件。文件内容如下：
     ```yaml
     username: "your_username"
     password: "your_password"
@@ -19,8 +20,8 @@
 2. 在同一文件夹中创建一个 `docker-compose.yml` 文件：
     ```yaml
     services:
-      bb-rss:
-        image: geniucker/blackboard-rss:latest
+      zjuintl-rss:
+        image: geniucker/zjuintl-rss:latest
         environment:
           - TZ=Asia/Shanghai
         ports:
@@ -32,7 +33,7 @@
 
 ### 二进制部署
 
-1. 下载最新的 [release](https://github.com/ZJUIntl-share/blackboard-rss/releases)。
+1. 下载最新的 [release](https://github.com/ZJUIntl-share/ZJUIntl-RSS/releases)。
 2. 解压缩文件并在同一文件夹中创建一个 `config.yaml` 文件。文件内容如下：
   ```yaml
   username: "your_username"

@@ -1,5 +1,5 @@
 FROM --platform=$BUILDPLATFORM python:3.11.8-alpine3.19 AS builder
-LABEL name="blackboard-rss"
+LABEL name="zjuintl-rss"
 
 WORKDIR /app
 

@@ -20,7 +20,7 @@ permissions:
 
 jobs:
   build-and-push:
-    if: github.repository == 'ZJUIntl-share/blackboard-RSS'
+    if: github.repository == 'ZJUIntl-share/ZJUIntl-RSS'
     uses: ./.github/workflows/build-image.yml
     secrets: inherit
     with:

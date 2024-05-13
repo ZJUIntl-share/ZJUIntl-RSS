@@ -1,6 +1,6 @@
 services:
-  bb-rss:
-    image: geniucker/blackboard-rss:latest
+  zjuintl-rss:
+    image: geniucker/zjuintl-rss:latest
     environment:
       - TZ=Asia/Shanghai
     ports:

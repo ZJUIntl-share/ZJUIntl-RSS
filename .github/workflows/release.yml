@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   setup:
-    if: github.repository == 'ZJUIntl-share/blackboard-RSS'
+    if: github.repository == 'ZJUIntl-share/ZJUIntl-RSS'
     runs-on: ubuntu-latest
     outputs:
       tag: ${{ steps.set_tag.outputs.tag }}
@@ -36,7 +36,7 @@ jobs:
       tags: ${{ needs.setup.outputs.tag }},latest
 
   release:
-    if: github.repository == 'ZJUIntl-share/blackboard-RSS'
+    if: github.repository == 'ZJUIntl-share/ZJUIntl-RSS'
     needs: [build, build-image]
     runs-on: ubuntu-latest
     steps:
@@ -48,7 +48,7 @@ jobs:
 
       - name: zip for each platform
         run: |
-          for dir in blackboard-rss-*; do
+          for dir in zjuintl-rss-*; do
             if [ -d "$dir" ]; then
               echo "----- Zip $dir -----"
               (cd $dir && zip -r9 "../$dir.zip" ./*)
@@ -59,4 +59,4 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            blackboard-rss-*.zip
+            zjuintl-rss-*.zip
