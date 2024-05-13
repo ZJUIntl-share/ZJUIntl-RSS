@@ -6,7 +6,7 @@
 
 - `GET /rss/grades`: 获取成绩
 - `GET /rss/announcements`: 获取公告
-- 'GET /rss/myzjunotices': 获取 myZJU 通知
+- `GET /rss/myzjunotices`: 获取 myZJU 通知
 
 ## 部署
 
