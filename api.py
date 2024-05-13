@@ -79,6 +79,7 @@ def get_myZJU_notices():
         fe = fg.add_entry()
         fe.id(item.title)
         fe.title(item.title)
+        fe.link(href=item.link, rel="alternate")
         fe.updated(item.date.replace(tzinfo=datetime.timezone(datetime.timedelta(hours=8))))
         fe.content(item.content)
 
