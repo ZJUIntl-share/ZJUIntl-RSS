@@ -1,11 +1,11 @@
 # ZJUIntl RSS
 
-这是一个将 Blackboard 的成绩和 Announcement 转换为 RSS (Atom) 订阅的服务端程序。搭配 Feeder 等软件可以实现 Blackboard 成绩和 Announcement 的推送。
+这是一个将 ZJU 国际校区的一些信息转换为 RSS (Atom) 订阅的服务端程序。搭配 Feeder 等软件可以实现 Blackboard 成绩、 Announcement 以及 myZJU 通知的推送。
 
 ## API
 
-- `GET /rss/grades`: 获取成绩
-- `GET /rss/announcements`: 获取公告
+- `GET /rss/grades`: 获取 Blackboard 成绩
+- `GET /rss/announcements`: 获取 Blackhoard 公告
 - `GET /rss/myzjunotices`: 获取 myZJU 通知
 
 ## 部署
